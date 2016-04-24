@@ -44,7 +44,7 @@ public class CardContainer extends AdapterView<ListAdapter> {
         }
 
         @Override
-        public void onInvalidated() {
+    public void onInvalidated() {
             super.onInvalidated();
             clearStack();
         }
