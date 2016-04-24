@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.mainlayout);
 		mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 		initSignUp();
-		initSignUp();
+		initSignIn();
 		initCards();
 		initMatch();
 	}
