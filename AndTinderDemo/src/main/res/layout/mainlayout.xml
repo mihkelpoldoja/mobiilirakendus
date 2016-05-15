@@ -3,8 +3,17 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+    android:background="@drawable/taust1">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+    </LinearLayout>
     <ViewFlipper
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -15,5 +24,6 @@
         <include android:id="@+id/signup" layout="@layout/signup"></include>
         <include android:id="@+id/cards" layout="@layout/cards"></include>
         <include android:id="@+id/match" layout="@layout/match"></include>
+        <include android:id="@+id/likes" layout="@layout/likes"></include>
     </ViewFlipper>
 </LinearLayout>

@@ -1,37 +1,26 @@
-/**
- * AndTinder v0.1 for Android
- *
- * @Author: Enrique López Mañas <eenriquelopez@gmail.com>
- * http://www.lopez-manas.com
- *
- * TAndTinder is a native library for Android that provide a
- * Tinder card like effect. A card can be constructed using an
- * image and displayed with animation effects, dismiss-to-like
- * and dismiss-to-unlike, and use different sorting mechanisms.
- *
- * AndTinder is compatible with API Level 13 and upwards
- *
- * @copyright: Enrique López Mañas
- * @license: Apache License 2.0
- */
-
 package com.andtinder.demo;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ViewFlipper;
 
 import com.andtinder.model.CardModel;
 import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -41,17 +30,20 @@ public class MainActivity extends Activity {
 	private CardContainer mCardContainer;
 	private ViewFlipper mViewFlipper;
 	private Button signUpButton;
-	
+	private Button signUpSubmitButton;
+	private ArrayList<String> likes;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mainlayout);
 		mViewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
+		likes = new ArrayList<String>();
 		initSignUp();
 		initSignIn();
 		initCards();
 		initMatch();
+
 	}
 
 	private void initMatch() {
@@ -59,6 +51,14 @@ public class MainActivity extends Activity {
 	}
 
 	private void initSignUp() {
+		signUpSubmitButton = (Button) mViewFlipper.findViewById(R.id.signup).findViewById(R.id.buttonSignUpSubmit);
+		signUpSubmitButton.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mViewFlipper.setDisplayedChild(2);
+				return false;
+			}
+		});
 	}
 
 	private void initSignIn()
@@ -81,58 +81,60 @@ public class MainActivity extends Activity {
 
 		SimpleCardStackAdapter adapter = new SimpleCardStackAdapter(this);
 
-		adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title6", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title2", "Description goes here", r.getDrawable(R.drawable.picture2)));
-		adapter.add(new CardModel("Title3", "Description goes here", r.getDrawable(R.drawable.picture3)));
-		adapter.add(new CardModel("Title4", "Description goes here", r.getDrawable(R.drawable.picture1)));
-		adapter.add(new CardModel("Title5", "Description goes here", r.getDrawable(R.drawable.picture2)));
-
-		CardModel cardModel = new CardModel("Title1", "Description goes here", r.getDrawable(R.drawable.picture1));
+		CardModel cardModel = new CardModel("Amazon", "Get sidejob on Amazon, earn money as mechanical turk", r.getDrawable(R.drawable.amazon));
 		cardModel.setOnClickListener(new CardModel.OnClickListener() {
 			@Override
 			public void OnClickListener() {
-				Log.i("Swipeable Cards","I am pressing the card");
+
 			}
 		});
 
 		cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
 			@Override
-			public void onLike() {
-				Log.i("Swipeable Cards","I like the card");
+			public void onLike(CardModel model) {
+
+				mViewFlipper.setDisplayedChild(3);
+				likes.add(model.getTitle());
 			}
 
 			@Override
-			public void onDislike() {
-				Log.i("Swipeable Cards","I dislike the card");
+			public void onDislike(CardModel model) {
+				mViewFlipper.setDisplayedChild(3);
 			}
 		});
-
 		adapter.add(cardModel);
 
+		adapter.add(CreateCardModel("Intel", "Intel is searching for sales manager", r.getDrawable(R.drawable.intel)));
+		adapter.add(CreateCardModel("Code exceptional", "Code expeption is searching for coder", r.getDrawable(R.drawable.codeexc)));
+		adapter.add(CreateCardModel("Purcho", "Join Purcho as Q&A engineer", r.getDrawable(R.drawable.purcho)));
+		adapter.add(CreateCardModel("Google", "Start your dream career at Google", r.getDrawable(R.drawable.google)));
+		adapter.add(CreateCardModel("ITP", "Software Engineer Java - $30K", r.getDrawable(R.drawable.itp)));
+
 		mCardContainer.setAdapter(adapter);
+	}
+
+	private CardModel CreateCardModel(String title, String description, Drawable drawble)
+	{
+		CardModel cardModel = new CardModel(title, description, drawble);
+		cardModel.setOnCardDismissedListener(new CardModel.OnCardDismissedListener() {
+			@Override
+			public void onLike(CardModel model) {
+				likes.add(model.getTitle());
+			}
+
+			@Override
+			public void onDislike(CardModel model) {
+
+			}
+		});
+		return cardModel;
+	}
+
+	public void onViewLikesClick(View v) {
+		mViewFlipper.setDisplayedChild(4);
+		ListView list = (ListView) findViewById(R.id.likes).findViewById(R.id.listViewLikes);
+		ArrayAdapter<String> itemsAdapter =
+				new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, likes);
+		list.setAdapter(itemsAdapter);
 	}
 }

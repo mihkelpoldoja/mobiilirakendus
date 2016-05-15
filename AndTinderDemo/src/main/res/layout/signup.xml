@@ -41,32 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Account type:"
-        android:layout_gravity="left" />
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/userType">
-        <RadioButton
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Job seeker"
-            android:id="@+id/radioButtonSeeker"
-            android:checked="false" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Employer"
-            android:id="@+id/radioButtonEmployer"
-            android:checked="false" />
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="User description:"
         android:layout_gravity="left" />
 
@@ -77,13 +51,13 @@
         android:ems="10"
         android:id="@+id/editTextDescription"
         android:gravity="top|left"
-        android:lines="8"
+        android:lines="5"
         android:text="" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:id="@+id/buttonSignUp"
+        android:text="Next >>"
+        android:id="@+id/buttonSignUpSubmit"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -2,4 +2,5 @@
 <resources>
     <color name="card_bg">#EBEBEB</color>
     <color name="card_outline">#D0D0CE</color>
+    <color name="primary_material_light">#a82d2d</color>
 </resources>
